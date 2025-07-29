@@ -25,7 +25,7 @@ fi
 update_repo_url() {
     local file=$1
     if [ -f "$file" ]; then
-        sed -i.bak "s|https://github.com/your-username/your-repo.git|${GIT_REPO_URL}|g" "$file"
+        sed -i.bak "s|https://github.com/muratozcubukcu/Helm.git|${GIT_REPO_URL}|g" "$file"
         sed -i.bak "s|path: Helm|path: .|g" "$file"
     fi
 }
