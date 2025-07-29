@@ -8,27 +8,15 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/muratozcubukcu/Helm.git  # Replace with your Git repo URL
+    repoURL: https://github.com/muratozcubukcu/Helm.git
     targetRevision: HEAD
-    path: .  # Path to the Helm chart directory (root of repo)
+    path: .
     helm:
       valueFiles:
         - values.yaml
-      # Optional: Override values inline
-      # values: |
-      #   replicaCount: 3
-      #   service:
-      #     type: LoadBalancer
-      #   ingress:
-      #     enabled: true
-      #     hosts:
-      #       - host: myapp.example.com
-      #         paths:
-      #           - path: /
-      #             pathType: Prefix
   destination:
     server: https://kubernetes.default.svc
-    namespace: nginx-app  # Target namespace for deployment
+    namespace: nginx-app
   syncPolicy:
     automated:
       prune: true

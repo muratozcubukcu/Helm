@@ -4,9 +4,8 @@ metadata:
   name: production
   namespace: argocd
 spec:
-  description: Production applications
   sourceRepos:
-    - 'https://github.com/muratozcubukcu/Helm.git'  # Replace with your repo
+    - 'https://github.com/muratozcubukcu/Helm.git'
   destinations:
     - namespace: nginx-app-production
       server: https://kubernetes.default.svc
@@ -27,20 +26,4 @@ spec:
     - group: apps
       kind: Deployment
     - group: networking.k8s.io
-      kind: Ingress
-  roles:
-    - name: admin
-      description: Admin access to production applications
-      policies:
-        - p, proj:production:admin, applications, *, production/*, allow
-        - p, proj:production:admin, repositories, *, *, allow
-      groups:
-        - admin-group
-    - name: developer
-      description: Developer access to production applications
-      policies:
-        - p, proj:production:developer, applications, get, production/*, allow
-        - p, proj:production:developer, applications, sync, production/*, allow
-        - p, proj:production:developer, repositories, get, *, allow
-      groups:
-        - developer-group 
+      kind: Ingress 

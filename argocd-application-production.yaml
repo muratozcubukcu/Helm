@@ -11,27 +11,18 @@ metadata:
 spec:
   project: production
   source:
-    repoURL: https://github.com/muratozcubukcu/Helm.git  # Replace with your Git repo URL
+    repoURL: https://github.com/muratozcubukcu/Helm.git
     targetRevision: HEAD
-    path: .  # Path to the Helm chart directory (root of repo)
+    path: .
     helm:
       valueFiles:
-        - example-values.yaml  # Using the production-ready values
-      # Additional production overrides
-      values: |
-        # Override any values from example-values.yaml if needed
-        # replicaCount: 5
-        # resources:
-        #   limits:
-        #     cpu: 1000m
-        #     memory: 1Gi
+        - values.yaml
   destination:
     server: https://kubernetes.default.svc
     namespace: nginx-app-production
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
     syncOptions:
       - CreateNamespace=true
       - PrunePropagationPolicy=foreground
