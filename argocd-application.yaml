@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-app
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/your-username/your-repo.git  # Replace with your Git repo URL
+    targetRevision: HEAD
+    path: Helm  # Path to the Helm chart directory
+    helm:
+      valueFiles:
+        - values.yaml
+      # Optional: Override values inline
+      # values: |
+      #   replicaCount: 3
+      #   service:
+      #     type: LoadBalancer
+      #   ingress:
+      #     enabled: true
+      #     hosts:
+      #       - host: myapp.example.com
+      #         paths:
+      #           - path: /
+      #             pathType: Prefix
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-app  # Target namespace for deployment
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m 

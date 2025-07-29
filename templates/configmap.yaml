@@ -1,0 +1,24 @@
+{{- if .Values.nginxConfig.customConfig -}}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nginx-app.fullname" . }}-nginx-config
+  labels:
+    {{- include "nginx-app.labels" . | nindent 4 }}
+data:
+  nginx.conf: |
+{{ .Values.nginxConfig.customConfig | indent 4 }}
+{{- end }}
+
+{{- if .Values.nginxConfig.customDefaultConf -}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "nginx-app.fullname" . }}-nginx-default-conf
+  labels:
+    {{- include "nginx-app.labels" . | nindent 4 }}
+data:
+  default.conf: |
+{{ .Values.nginxConfig.customDefaultConf | indent 4 }}
+{{- end }} 

@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-app-production
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  labels:
+    environment: production
+    app: nginx-app
+spec:
+  project: production
+  source:
+    repoURL: https://github.com/your-username/your-repo.git  # Replace with your Git repo URL
+    targetRevision: HEAD
+    path: Helm  # Path to the Helm chart directory
+    helm:
+      valueFiles:
+        - example-values.yaml  # Using the production-ready values
+      # Additional production overrides
+      values: |
+        # Override any values from example-values.yaml if needed
+        # replicaCount: 5
+        # resources:
+        #   limits:
+        #     cpu: 1000m
+        #     memory: 1Gi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: nginx-app-production
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PrunePropagationPolicy=foreground
+      - PruneLast=true
+    retry:
+      limit: 5
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 3m 
