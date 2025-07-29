@@ -6,7 +6,7 @@ metadata:
 spec:
   description: Production applications
   sourceRepos:
-    - 'https://github.com/muratozcubukcu/Helm.git'  # Replace with your repo
+    - 'https://github.com/your-username/your-repo.git'  # Replace with your repo
   destinations:
     - namespace: nginx-app-production
       server: https://kubernetes.default.svc

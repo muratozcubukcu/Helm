@@ -11,9 +11,9 @@ metadata:
 spec:
   project: production
   source:
-    repoURL: https://github.com/muratozcubukcu/Helm.git  # Replace with your Git repo URL
+    repoURL: https://github.com/your-username/your-repo.git  # Replace with your Git repo URL
     targetRevision: HEAD
-    path: .  # Path to the Helm chart directory (root of repo)
+    path: Helm  # Path to the Helm chart directory
     helm:
       valueFiles:
         - example-values.yaml  # Using the production-ready values

@@ -57,11 +57,12 @@ echo -e "${GREEN}✅ ArgoCD is installed${NC}"
 # Update Git repository URL in ArgoCD application files
 echo -e "${YELLOW}🔧 Updating Git repository URL...${NC}"
 
-# Function to update repo URL in a file
+# Function to update repo URL and path in a file
 update_repo_url() {
     local file=$1
     if [ -f "$file" ]; then
         sed -i.bak "s|https://github.com/your-username/your-repo.git|${GIT_REPO_URL}|g" "$file"
+        sed -i.bak "s|path: Helm|path: .|g" "$file"
         echo -e "${GREEN}✅ Updated ${file}${NC}"
     fi
 }
