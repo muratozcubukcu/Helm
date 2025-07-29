@@ -22,6 +22,12 @@ if ! kubectl get namespace argocd >/dev/null 2>&1; then
     exit 1
 fi
 
+if ! kubectl get namespace cert-manager >/dev/null 2>&1; then
+    echo "cert-manager not found. Install with:"
+    echo "./install-cert-manager.sh"
+    exit 1
+fi
+
 update_repo_url() {
     local file=$1
     if [ -f "$file" ]; then
@@ -38,6 +44,8 @@ kubectl apply -f argocd-project.yaml
 
 if [ "$ENVIRONMENT" = "production" ]; then
     kubectl apply -f argocd-application-production.yaml
+elif [ "$ENVIRONMENT" = "tls" ]; then
+    kubectl apply -f argocd-application-tls.yaml
 else
     kubectl apply -f argocd-application.yaml
 fi
@@ -47,6 +55,8 @@ sleep 5
 APP_NAME="nginx-app"
 if [ "$ENVIRONMENT" = "production" ]; then
     APP_NAME="nginx-app-production"
+elif [ "$ENVIRONMENT" = "tls" ]; then
+    APP_NAME="nginx-app-tls"
 fi
 
 for i in {1..30}; do
